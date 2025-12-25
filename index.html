@@ -56,10 +56,6 @@
             padding: 80px 0;
         }
 
-        .hidden {
-            display: none !important;
-        }
-
         /* Typography */
         h1, h2, h3, h4 {
             font-weight: 700;
@@ -277,7 +273,7 @@
             font-weight: bold;
         }
 
-        /* Roadmap Section */
+        /* Roadmap Section - UPDATED FOR SMOOTH TRANSITIONS */
         .phase-card {
             background-color: var(--bg-card);
             border-radius: var(--border-radius);
@@ -285,6 +281,12 @@
             border: 1px solid var(--border-color);
             overflow: hidden;
             box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .phase-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-color);
         }
 
         .phase-header {
@@ -294,6 +296,11 @@
             padding: 25px 30px;
             background-color: rgba(30, 41, 59, 0.8);
             cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .phase-header:hover {
+            background-color: rgba(37, 99, 235, 0.1);
         }
 
         .phase-header h3 {
@@ -317,9 +324,25 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .collapse-btn.rotated {
+            transform: rotate(180deg);
         }
 
         .phase-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, padding 0.3s ease;
+            opacity: 0;
+            padding: 0 30px;
+            border-top: 1px solid transparent;
+        }
+
+        .phase-content.expanded {
+            max-height: 1000px;
+            opacity: 1;
             padding: 30px;
             border-top: 1px solid var(--border-color);
         }
@@ -333,6 +356,25 @@
             margin-bottom: 15px;
             display: flex;
             align-items: flex-start;
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .phase-checklist li:nth-child(1) { animation-delay: 0.1s; }
+        .phase-checklist li:nth-child(2) { animation-delay: 0.2s; }
+        .phase-checklist li:nth-child(3) { animation-delay: 0.3s; }
+        .phase-checklist li:nth-child(4) { animation-delay: 0.4s; }
+        .phase-checklist li:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .phase-checklist input[type="checkbox"] {
@@ -341,11 +383,24 @@
             width: 18px;
             height: 18px;
             cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .phase-checklist input[type="checkbox"]:checked {
+            accent-color: var(--success-color);
+            transform: scale(1.1);
         }
 
         .phase-checklist label {
             cursor: pointer;
             flex: 1;
+            transition: var(--transition);
+        }
+
+        .phase-checklist input[type="checkbox"]:checked + label {
+            color: var(--success-color);
+            text-decoration: line-through;
+            opacity: 0.7;
         }
 
         .phase-quote {
@@ -355,6 +410,16 @@
             border-radius: 0 var(--border-radius) var(--border-radius) 0;
             display: flex;
             align-items: flex-start;
+            animation: slideIn 0.5s ease 0.6s forwards;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .phase-quote i {
@@ -396,6 +461,11 @@
             font-size: 2.5rem;
             color: var(--accent-color);
             margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card:hover .skill-icon {
+            transform: scale(1.1);
         }
 
         .skill-card h3 {
@@ -414,10 +484,12 @@
             font-weight: 600;
             display: inline-block;
             padding-top: 15px;
+            transition: var(--transition);
         }
 
         .skill-link:hover {
             text-decoration: underline;
+            transform: translateX(5px);
         }
 
         /* Projects Section */
@@ -444,6 +516,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
+            position: relative;
         }
 
         .tab-btn:hover {
@@ -454,7 +527,22 @@
         .tab-btn.active {
             color: var(--text-primary);
             background-color: var(--bg-card);
-            border-bottom: 3px solid var(--accent-color);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--accent-color);
+            animation: slideInWidth 0.3s ease;
+        }
+
+        @keyframes slideInWidth {
+            from { width: 0; }
+            to { width: 100%; }
         }
 
         .tab-content {
@@ -463,6 +551,18 @@
 
         .tab-pane {
             display: none;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .tab-pane.active {
@@ -476,6 +576,12 @@
             border-radius: var(--border-radius);
             padding: 25px;
             border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
         }
 
         .project-card h3 {
@@ -501,16 +607,25 @@
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .tech-tag {
+            background-color: rgba(37, 99, 235, 0.3);
+            transform: translateY(-2px);
         }
 
         .project-link {
             color: var(--accent-color);
             text-decoration: none;
             font-weight: 600;
+            display: inline-block;
+            transition: var(--transition);
         }
 
         .project-link:hover {
             text-decoration: underline;
+            transform: translateX(5px);
         }
 
         /* Progress Tracker */
@@ -557,7 +672,7 @@
             stroke-linecap: round;
             stroke-dasharray: 339.292;
             stroke-dashoffset: 339.292;
-            transition: stroke-dashoffset 1s ease;
+            transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .progress-text {
@@ -601,7 +716,7 @@
             background-color: var(--success-color);
             border-radius: 5px;
             width: 0%;
-            transition: width 1s ease;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .phase-bar {
@@ -649,6 +764,18 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            animation: slideInRight 0.3s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .activity-item:last-child {
@@ -693,6 +820,11 @@
             font-size: 2.5rem;
             color: var(--accent-color);
             margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .mindset-card:hover .mindset-icon {
+            transform: rotate(10deg) scale(1.1);
         }
 
         .mindset-card h3 {
@@ -705,6 +837,12 @@
             border-radius: var(--border-radius);
             padding: 50px;
             border: 2px dashed var(--border-color);
+            transition: var(--transition);
+        }
+
+        .mindset-cta:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
         }
 
         .mindset-cta h3 {
@@ -809,7 +947,7 @@
                 transform: translateY(-100%);
                 opacity: 0;
                 visibility: hidden;
-                transition: var(--transition);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                 border-bottom: 1px solid var(--border-color);
             }
             
@@ -846,6 +984,10 @@
             .tab-pane.active {
                 grid-template-columns: 1fr;
             }
+            
+            .phase-content.expanded {
+                padding: 20px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -869,10 +1011,6 @@
             }
             
             .phase-header {
-                padding: 20px;
-            }
-            
-            .phase-content {
                 padding: 20px;
             }
             
@@ -952,9 +1090,9 @@
                 <div class="phase-card">
                     <div class="phase-header">
                         <h3>Phase 1: Class 10–12 <span class="phase-years">(Years 1-2)</span></h3>
-                        <button class="collapse-btn" data-phase="1">−</button>
+                        <button class="collapse-btn rotated" data-phase="1">−</button>
                     </div>
-                    <div class="phase-content" id="phase1-content">
+                    <div class="phase-content expanded" id="phase1-content">
                         <div class="phase-description">
                             <p><strong>Focus:</strong> Build academic foundation while developing discipline and parallel skills.</p>
                             <ul class="phase-checklist">
@@ -978,7 +1116,7 @@
                         <h3>Phase 2: Skill Development <span class="phase-years">(Years 3-5)</span></h3>
                         <button class="collapse-btn" data-phase="2">+</button>
                     </div>
-                    <div class="phase-content hidden" id="phase2-content">
+                    <div class="phase-content" id="phase2-content">
                         <div class="phase-description">
                             <p><strong>Focus:</strong> Develop technical depth and engineering mindset.</p>
                             <ul class="phase-checklist">
@@ -1002,7 +1140,7 @@
                         <h3>Phase 3: IIT Life <span class="phase-years">(Years 6-8)</span></h3>
                         <button class="collapse-btn" data-phase="3">+</button>
                     </div>
-                    <div class="phase-content hidden" id="phase3-content">
+                    <div class="phase-content" id="phase3-content">
                         <div class="phase-description">
                             <p><strong>Focus:</strong> Leverage IIT ecosystem for maximum growth and network building.</p>
                             <ul class="phase-checklist">
@@ -1026,7 +1164,7 @@
                         <h3>Phase 4: Startup Mindset <span class="phase-years">(Years 9-10+)</span></h3>
                         <button class="collapse-btn" data-phase="4">+</button>
                     </div>
-                    <div class="phase-content hidden" id="phase4-content">
+                    <div class="phase-content" id="phase4-content">
                         <div class="phase-description">
                             <p><strong>Focus:</strong> Build world-scale solutions in energy, space, AI, or transport.</p>
                             <ul class="phase-checklist">
@@ -1472,7 +1610,7 @@
                 });
             });
             
-            // Collapsible phases
+            // Collapsible phases with smooth animation
             collapseButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const phase = this.getAttribute('data-phase');
@@ -1511,8 +1649,8 @@
             // Update progress display
             updateProgress();
             
-            // Initialize first phase as open
-            document.getElementById('phase1-content').classList.remove('hidden');
+            // Add animation to checklist items when phase opens
+            observePhaseAnimations();
         }
 
         // Toggle mobile menu
@@ -1520,36 +1658,71 @@
             navLinks.classList.toggle('active');
         }
 
-        // Toggle phase content visibility
+        // Toggle phase content with smooth animation
         function togglePhase(phase, button) {
             const content = document.getElementById(`phase${phase}-content`);
-            const isHidden = content.classList.contains('hidden');
+            const isExpanded = content.classList.contains('expanded');
             
-            // Close all other phases (optional - remove if you want multiple open)
+            // Close all other phases
             document.querySelectorAll('.phase-content').forEach(el => {
                 if (el.id !== `phase${phase}-content`) {
-                    el.classList.add('hidden');
-                }
-            });
-            
-            // Update all buttons
-            document.querySelectorAll('.collapse-btn').forEach(btn => {
-                if (btn !== button) {
-                    btn.textContent = '+';
+                    el.classList.remove('expanded');
+                    // Reset button rotation for other phases
+                    const otherBtn = el.parentElement.querySelector('.collapse-btn');
+                    if (otherBtn) {
+                        otherBtn.classList.remove('rotated');
+                        otherBtn.textContent = '+';
+                    }
                 }
             });
             
             // Toggle current phase
-            if (isHidden) {
-                content.classList.remove('hidden');
-                button.textContent = '−';
-            } else {
-                content.classList.add('hidden');
+            if (isExpanded) {
+                // Collapse
+                content.classList.remove('expanded');
+                button.classList.remove('rotated');
                 button.textContent = '+';
+            } else {
+                // Expand
+                content.classList.add('expanded');
+                button.classList.add('rotated');
+                button.textContent = '−';
             }
         }
 
-        // Switch between project tabs
+        // Set up Intersection Observer for phase animations
+        function observePhaseAnimations() {
+            const phaseContents = document.querySelectorAll('.phase-content');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.target.classList.contains('expanded')) {
+                        const checklistItems = entry.target.querySelectorAll('.phase-checklist li');
+                        const quote = entry.target.querySelector('.phase-quote');
+                        
+                        // Animate checklist items with delay
+                        checklistItems.forEach((item, index) => {
+                            setTimeout(() => {
+                                item.style.animation = `fadeIn 0.5s ease forwards`;
+                            }, index * 100);
+                        });
+                        
+                        // Animate quote
+                        if (quote) {
+                            setTimeout(() => {
+                                quote.style.animation = 'slideIn 0.5s ease forwards';
+                            }, 600);
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            phaseContents.forEach(content => {
+                observer.observe(content);
+            });
+        }
+
+        // Switch between project tabs with animation
         function switchTab(tabId, button) {
             // Remove active class from all buttons and panes
             tabButtons.forEach(btn => btn.classList.remove('active'));
@@ -1559,7 +1732,18 @@
             
             // Add active class to clicked button and corresponding pane
             button.classList.add('active');
-            document.getElementById(`${tabId}-tab`).classList.add('active');
+            const tabPane = document.getElementById(`${tabId}-tab`);
+            tabPane.classList.add('active');
+            
+            // Animate project cards
+            const projectCards = tabPane.querySelectorAll('.project-card');
+            projectCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.style.animation = 'none';
+                setTimeout(() => {
+                    card.style.animation = 'fadeInUp 0.5s ease';
+                }, 10);
+            });
         }
 
         // Update progress tracker
